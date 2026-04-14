@@ -221,15 +221,16 @@
             </div>
         </div>
 
-        <!-- Final Request Section (UPDATED with user's new heartfelt message) -->
+        <!-- Final Request Section (One Last Thing) with exact text -->
         <div class="fade-up my-20 text-center">
             <div class="glass-card p-8 md:p-12 max-w-2xl mx-auto">
                 <span class="text-sm uppercase tracking-[0.2em] text-[#FF69B4] font-semibold">one last thing</span>
                 <div class="mt-4 space-y-5 text-[#DDDCF0] text-base md:text-lg">
-                    <p>I’m not asking for anything…<br>just don’t let me become a stranger.</p>
-                    <p>I know I made mistakes…<br>and I lost you because of them…</p>
-                    <p>but if there’s even a small place left…<br>let me stay… at least as a friend.</p>
-                    <p class="text-[#FFB6D9] font-medium">you still mean everything to me, Molu 873 💔</p>
+                    <p>If you’re reading this, Molu…</p>
+                    <p>I don’t know what I deserve anymore…<br>but I just want to ask you one thing…</p>
+                    <p class="text-xl md:text-2xl playfair font-bold text-white">please give me one chance… at least as a friend.</p>
+                    <p>I don’t want to become a stranger in your life…<br>not after everything we had…</p>
+                    <p>Even if it’s just friendship…<br>I promise, I’ll value it more than anything.</p>
                 </div>
                 <div class="mt-10">
                     <button id="comebackBtn" class="bg-[#FF69B4] hover:bg-[#e0559a] text-white font-semibold py-3.5 px-10 rounded-full text-lg shadow-xl shadow-[#FF69B4]/30 transition-all btn-ripple flex items-center gap-2 mx-auto group backdrop-blur-sm">
@@ -305,7 +306,7 @@
                 events: {
                     'onReady': (event) => {
                         playerReady = true;
-                        event.target.setVolume(25);
+                        event.target.setVolume(22);
                         event.target.playVideo().catch(e => {
                             console.warn("Autoplay blocked, showing hint");
                             showAutoplayHint();
