@@ -23,7 +23,6 @@
             overflow-x: hidden;
             color: #f0eef7;
         }
-        /* animated overlay for depth */
         .psych-overlay {
             position: fixed;
             inset: 0;
@@ -36,7 +35,6 @@
             0% { opacity: 0.4; }
             100% { opacity: 0.9; }
         }
-        /* Flutter-like glass cards */
         .glass-card {
             background: rgba(20, 12, 28, 0.65);
             backdrop-filter: blur(14px);
@@ -51,7 +49,6 @@
             border-color: rgba(255, 105, 180, 0.7);
             box-shadow: 0 28px 40px -16px rgba(255, 105, 180, 0.3);
         }
-        /* heartbeat for key lines */
         .heartbeat {
             animation: gentleHeartbeat 1.8s ease infinite;
             display: inline-block;
@@ -60,7 +57,6 @@
             0%, 100% { transform: scale(1); text-shadow: 0 0 0px #FF69B4; }
             50% { transform: scale(1.05); text-shadow: 0 0 12px #FF69B4; }
         }
-        /* fade-up scroll */
         .fade-up {
             opacity: 0;
             transform: translateY(32px);
@@ -70,7 +66,6 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* floating particles canvas */
         .floating-canvas {
             position: fixed;
             top: 0;
@@ -88,7 +83,6 @@
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #1e1020; }
         ::-webkit-scrollbar-thumb { background: #FF69B4; border-radius: 20px; }
-        /* timeline dot */
         .timeline-dot {
             background: #FF69B4;
             box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.6), 0 0 0 8px rgba(255, 105, 180, 0.2);
@@ -273,7 +267,7 @@
         </div>
     </div>
 
-    <!-- Music Control Button (floating) - BGM autoplay attempted, this is for manual override -->
+    <!-- Music Control Button (floating) - for manual override if autoplay blocked -->
     <div class="fixed bottom-6 right-6 z-30">
         <button id="bgmControlBtn" class="music-btn rounded-full p-3 shadow-xl flex items-center justify-center w-12 h-12">
             <span id="musicIcon" class="text-2xl">🎵</span>
