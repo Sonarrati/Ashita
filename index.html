@@ -247,7 +247,7 @@
                 made with <span class="heartbeat text-[#FF69B4] inline-block">❤️</span> by someone who still loves her — ashitaa
             </p>
             <div class="inline-flex items-center gap-1 mt-2 cute-tag">
-                <span>🎵</span> <span class="text-[11px]">BGM: soulful melody</span>
+                <span>🎵</span> <span class="text-[11px]">BGM: soulful melody (auto-plays)</span>
             </div>
         </footer>
     </div>
@@ -273,7 +273,7 @@
         </div>
     </div>
 
-    <!-- Music Control Button (floating) - BGM autoplay attempted -->
+    <!-- Music Control Button (floating) - BGM autoplay attempted, this is for manual override -->
     <div class="fixed bottom-6 right-6 z-30">
         <button id="bgmControlBtn" class="music-btn rounded-full p-3 shadow-xl flex items-center justify-center w-12 h-12">
             <span id="musicIcon" class="text-2xl">🎵</span>
@@ -281,10 +281,10 @@
     </div>
 
     <script>
-        // ---------- YouTube Player for DIRECT PLAY (autoplay) ----------
-        // Video ID from the link: Qs1L92uL22o
+        // ---------- YouTube Player for AUTOMATIC PLAY (no click needed) ----------
+        // Video ID: Qs1L92uL22o
         let player = null;
-        let isPlaying = true;
+        let isPlaying = false;
         let playerReady = false;
         
         function onYouTubeIframeAPIReady() {
@@ -293,7 +293,7 @@
                 width: '1',
                 videoId: 'Qs1L92uL22o',
                 playerVars: {
-                    'autoplay': 1,
+                    'autoplay': 1,       // force autoplay
                     'controls': 0,
                     'disablekb': 1,
                     'loop': 1,
@@ -306,15 +306,17 @@
                 events: {
                     'onReady': (event) => {
                         playerReady = true;
-                        event.target.setVolume(22);
-                        event.target.playVideo().catch(e => {
-                            console.warn("Autoplay blocked, showing hint");
-                            showAutoplayHint();
+                        event.target.setVolume(25);
+                        // attempt to play without any user gesture
+                        event.target.playVideo().then(() => {
+                            isPlaying = true;
+                            document.getElementById('musicIcon').innerHTML = '🎵';
+                        }).catch(e => {
+                            console.warn("Autoplay blocked by browser policy. User must interact.");
                             isPlaying = false;
                             document.getElementById('musicIcon').innerHTML = '🎧';
+                            showAutoplayBlockedMessage();
                         });
-                        isPlaying = true;
-                        document.getElementById('musicIcon').innerHTML = '🎵';
                     },
                     'onStateChange': (event) => {
                         if (event.data == YT.PlayerState.ENDED && isPlaying) {
@@ -328,17 +330,20 @@
                             document.getElementById('musicIcon').innerHTML = '🎧';
                         }
                     },
-                    'onError': () => { showAutoplayHint(); }
+                    'onError': (err) => {
+                        console.warn("YouTube error", err);
+                        showAutoplayBlockedMessage();
+                    }
                 }
             });
         }
         
-        function showAutoplayHint() {
-            let hint = document.createElement('div');
-            hint.innerText = '🎵 Click the pink music button to play the BGM (browser requires interaction)';
-            hint.style.cssText = 'position:fixed; bottom:100px; right:24px; background:#1A1A2E; backdrop-filter:blur(12px); border-radius:40px; padding:8px 18px; font-size:12px; border:1px solid #FF69B4; color:#FFC0E0; z-index:1000; font-family:monospace; pointer-events:none;';
-            document.body.appendChild(hint);
-            setTimeout(() => { hint.style.opacity = '0'; setTimeout(() => hint.remove(), 5000); }, 4000);
+        function showAutoplayBlockedMessage() {
+            let msg = document.createElement('div');
+            msg.innerText = '🎵 Browser blocked autoplay. Click the pink music button to play the BGM.';
+            msg.style.cssText = 'position:fixed; bottom:100px; right:24px; background:#1A1A2E; backdrop-filter:blur(12px); border-radius:40px; padding:8px 18px; font-size:12px; border:1px solid #FF69B4; color:#FFC0E0; z-index:1000; font-family:monospace; pointer-events:none;';
+            document.body.appendChild(msg);
+            setTimeout(() => { msg.style.opacity = '0'; setTimeout(() => msg.remove(), 6000); }, 5000);
         }
         
         function startBGM() {
@@ -346,13 +351,6 @@
                 player.playVideo();
                 isPlaying = true;
                 document.getElementById('musicIcon').innerHTML = '🎵';
-            } else {
-                setTimeout(() => {
-                    if (playerReady && player) {
-                        player.playVideo();
-                        isPlaying = true;
-                    }
-                }, 500);
             }
         }
         
@@ -496,7 +494,7 @@
             if (e.key === 'Escape' && modal.classList.contains('opacity-100')) closeModalFunc();
         });
         
-        // ---------- Music Control Button (manual toggle) ----------
+        // ---------- Music Control Button (manual toggle, but only needed if autoplay fails) ----------
         const bgmBtn = document.getElementById('bgmControlBtn');
         bgmBtn.addEventListener('click', () => {
             if (isPlaying) {
@@ -514,16 +512,12 @@
             });
         }, 2800);
         
-        // small note if BGM doesn't autoplay
+        // small note if autoplay fails after load
         setTimeout(() => {
-            if (!playerReady) {
-                let note = document.createElement('div');
-                note.innerText = '🎵 BGM is loading, please click the pink button if silent';
-                note.style.cssText = 'position:fixed; bottom:100px; right:24px; background:#1A1A2E; backdrop-filter:blur(12px); border-radius:40px; padding:8px 18px; font-size:11px; border:1px solid #FF69B4; color:#FFC0E0; z-index:1000;';
-                document.body.appendChild(note);
-                setTimeout(() => { note.style.opacity = '0'; setTimeout(() => note.remove(), 5000); }, 4000);
+            if (!isPlaying && playerReady) {
+                showAutoplayBlockedMessage();
             }
-        }, 2000);
+        }, 3000);
     </script>
 </body>
 </html>
