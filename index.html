@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Ashitaa | I Lost Her Twice 💔</title>
+    <meta name="description" content="a story of love, regret, and second chances — for Molu.">
+    <!-- Google Fonts + Tailwind -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Black & Pink gradient — deep psychological effect */
+            background: linear-gradient(135deg, #0a0a0e 0%, #1d0b1a 40%, #2f1025 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            color: #f0eef7;
+        }
+        /* animated overlay for depth */
+        .psych-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 70% 20%, rgba(255, 20, 147, 0.1) 0%, rgba(0,0,0,0.5) 90%);
+            z-index: 1;
+            animation: slowBreathing 12s infinite alternate;
+        }
+        @keyframes slowBreathing {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.9; }
+        }
+        /* Flutter-like glass cards */
+        .glass-card {
+            background: rgba(20, 12, 28, 0.65);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 105, 180, 0.35);
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 105, 180, 0.1) inset;
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 105, 180, 0.7);
+            box-shadow: 0 28px 40px -16px rgba(255, 105, 180, 0.3);
+        }
+        /* heartbeat for key lines */
+        .heartbeat {
+            animation: gentleHeartbeat 1.8s ease infinite;
+            display: inline-block;
+        }
+        @keyframes gentleHeartbeat {
+            0%, 100% { transform: scale(1); text-shadow: 0 0 0px #FF69B4; }
+            50% { transform: scale(1.05); text-shadow: 0 0 12px #FF69B4; }
+        }
+        /* fade-up scroll */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.7s ease;
+        }
+        .fade-up.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* floating particles canvas */
+        .floating-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .content-layer {
+            position: relative;
+            z-index: 2;
+        }
+        .btn-ripple:active { transform: scale(0.96); }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #1e1020; }
+        ::-webkit-scrollbar-thumb { background: #FF69B4; border-radius: 20px; }
+        /* timeline dot */
+        .timeline-dot {
+            background: #FF69B4;
+            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.6), 0 0 0 8px rgba(255, 105, 180, 0.2);
+        }
+        .youtube-bg {
+            position: fixed;
+            bottom: -200px;
+            right: -200px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .music-btn {
+            background: rgba(20, 12, 28, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid #FF69B4;
+            transition: all 0.2s;
+        }
+        .music-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #FF69B4;
+        }
+        .cute-tag {
+            background: rgba(255, 105, 180, 0.15);
+            border-radius: 40px;
+            padding: 4px 14px;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="psych-overlay"></div>
+    <canvas id="emotionCanvas" class="floating-canvas"></canvas>
+    <div id="youtubePlayer" class="youtube-bg"></div>
+
+    <div class="content-layer max-w-3xl mx-auto px-5 md:px-6 py-10 md:py-14">
+        <!-- Hero Section -->
+        <div class="fade-up text-center mb-16 md:mb-24">
+            <div class="inline-flex items-center gap-2 bg-[#FF69B4]/10 backdrop-blur-sm px-5 py-2 rounded-full border border-[#FF69B4]/40 text-sm font-medium">
+                <span class="w-2 h-2 rounded-full bg-[#FF69B4] animate-pulse"></span> ashitaa · eternal longing
+            </div>
+            <h1 class="playfair text-5xl md:text-7xl font-bold mt-8 bg-gradient-to-r from-[#FFF0F5] via-[#FFB6D9] to-[#FF69B4] bg-clip-text text-transparent leading-[1.2]">
+                I Lost Her… Twice 💔
+            </h1>
+            <p class="text-[#CDCDE8] text-base md:text-lg mt-5 max-w-md mx-auto tracking-wide">some losses are not accidents — they become the poetry you never wanted to write.</p>
+        </div>
+
+        <!-- Timeline with exact dates & paragraphs -->
+        <div class="mb-20">
+            <div class="text-center mb-10">
+                <span class="text-xs uppercase tracking-[0.25em] text-[#FF69B4] font-semibold">chronology of a broken heart</span>
+                <div class="w-12 h-[2px] bg-gradient-to-r from-[#FF69B4] to-transparent mx-auto mt-2"></div>
+            </div>
+            <div class="relative space-y-14 pl-4 md:pl-8 border-l-2 border-[#FF69B4]/30 ml-3">
+                <!-- Block 1: 30 Jan 2025 -->
+                <div class="relative fade-up">
+                    <div class="absolute -left-[37px] md:-left-[43px] top-6 w-5 h-5 rounded-full timeline-dot"></div>
+                    <div class="glass-card p-6 md:p-8">
+                        <div class="flex flex-wrap items-center gap-2 mb-3">
+                            <span class="text-[#FF69B4] font-mono text-xs font-bold bg-[#FF69B4]/10 px-3 py-1 rounded-full">30 January 2025</span>
+                            <span class="text-white/40 text-xs">—</span>
+                            <span class="text-sm font-medium text-white/80">The First Time I Lost My Molu</span>
+                        </div>
+                        <div class="space-y-4 text-[#E2E0F0] leading-relaxed text-base md:text-lg">
+                            <p>That was the day I lost someone…<br>not just someone, but a part of my life.</p>
+                            <p>At that time, I didn’t realize how important she was to me.<br>I thought everything was normal…<br>but slowly, I understood —<br>I had lost a diamond… someone rare… someone irreplaceable.</p>
+                        </div>
+                        <div class="mt-5 text-[#FF69B4]/60 text-sm flex items-center gap-1"><span>✧</span> hindsight always wears the colour of regret</div>
+                    </div>
+                </div>
+                <!-- Block 2: 11 April 2026 -->
+                <div class="relative fade-up">
+                    <div class="absolute -left-[37px] md:-left-[43px] top-6 w-5 h-5 rounded-full timeline-dot"></div>
+                    <div class="glass-card p-6 md:p-8">
+                        <div class="flex flex-wrap items-center gap-2 mb-3">
+                            <span class="text-[#FF69B4] font-mono text-xs font-bold bg-[#FF69B4]/10 px-3 py-1 rounded-full">11 April 2026</span>
+                            <span class="text-white/40 text-xs">—</span>
+                            <span class="text-sm font-medium text-white/80">The Second Time I Lost My Molu</span>
+                        </div>
+                        <div class="space-y-4 text-[#E2E0F0] leading-relaxed text-base md:text-lg">
+                            <p>And then… life gave me one more chance.</p>
+                            <p>She came back into my life…<br>but maybe I wasn’t good enough to keep her again.</p>
+                            <p>Because of my own mistakes… my own actions…<br>I lost her… again.</p>
+                            <p>This time, I knew everything…<br>I knew her value…<br>I knew how much I loved her…</p>
+                            <p>and still… I couldn’t keep her.</p>
+                        </div>
+                        <div class="mt-5 text-[#FF69B4]/60 text-sm flex items-center gap-1"><span>✧</span> awareness without change is the deepest wound</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emotional Highlight (regret paragraph) -->
+        <div class="fade-up my-20 text-center">
+            <div class="glass-card p-8 md:p-10 max-w-2xl mx-auto border-l-8 border-l-[#FF69B4]">
+                <p class="text-xl md:text-2xl playfair italic leading-relaxed tracking-wide">
+                    “Losing her once was my ignorance…<br>but losing her twice…<br>
+                    <span class="heartbeat text-[#FF69B4] font-bold text-2xl md:text-3xl">that was my fault.</span>”
+                </p>
+                <div class="mt-8 text-[#CECDE8] space-y-4 text-base md:text-lg">
+                    <p>And this is the regret I will carry forever.</p>
+                    <p>Even if I get everything in life…<br>success, money, happiness…<br>there will always be one pain inside me —<br>that I lost the person who meant everything to me… not once, but twice.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Love Letter : My Molu 873... -->
+        <div class="fade-up mb-24">
+            <div class="flex justify-center mb-4">
+                <span class="text-6xl opacity-90">💌</span>
+            </div>
+            <div class="glass-card p-6 md:p-10 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-[#FF69B4]/15 rounded-full blur-3xl"></div>
+                <h2 class="playfair text-4xl md:text-5xl font-bold text-white flex items-center gap-3 flex-wrap">
+                    My Molu 873… <span class="heartbeat text-[#FF69B4] text-4xl">❤️</span>
+                </h2>
+                <div class="h-1 w-16 bg-gradient-to-r from-[#FF69B4] to-transparent my-6 rounded-full"></div>
+                <div class="space-y-5 text-[#E8E6FA] leading-relaxed text-base md:text-lg">
+                    <p>You were never just a person in my life…<br>you were my peace… my happiness… my everything.</p>
+                    <p>You are still more important to me than myself.</p>
+                    <p>No matter how much time passes…<br>no matter how far you go…<br>you will always be my first priority.</p>
+                    <p>If someday you ever need me…<br>I promise, I’ll be there for you…<br>even if you don’t call me.</p>
+                    <p>I regret my mistakes…<br>I regret hurting you…</p>
+                    <p class="italic text-[#FFC0E0]">I am really sorry, Molu… 💔</p>
+                    <p>Maybe I don’t deserve you anymore…<br>but my love for you will never change.</p>
+                    <p class="playfair text-xl md:text-2xl font-semibold text-[#FF69B4] heartbeat">I will always love you…<br>Forever… My Molu 873 ❤️</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Request Section (UPDATED with user's new heartfelt message) -->
+        <div class="fade-up my-20 text-center">
+            <div class="glass-card p-8 md:p-12 max-w-2xl mx-auto">
+                <span class="text-sm uppercase tracking-[0.2em] text-[#FF69B4] font-semibold">one last thing</span>
+                <div class="mt-4 space-y-5 text-[#DDDCF0] text-base md:text-lg">
+                    <p>I’m not asking for anything…<br>just don’t let me become a stranger.</p>
+                    <p>I know I made mistakes…<br>and I lost you because of them…</p>
+                    <p>but if there’s even a small place left…<br>let me stay… at least as a friend.</p>
+                    <p class="text-[#FFB6D9] font-medium">you still mean everything to me, Molu 873 💔</p>
+                </div>
+                <div class="mt-10">
+                    <button id="comebackBtn" class="bg-[#FF69B4] hover:bg-[#e0559a] text-white font-semibold py-3.5 px-10 rounded-full text-lg shadow-xl shadow-[#FF69B4]/30 transition-all btn-ripple flex items-center gap-2 mx-auto group backdrop-blur-sm">
+                        👉 “Come Back” 
+                        <span class="group-hover:translate-x-1 transition-transform duration-200">❤️</span>
+                    </button>
+                    <p class="text-[#A0A0C0] text-xs mt-5">a whisper across every broken timeline</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center pt-12 pb-6 border-t border-white/5 mt-4 fade-up">
+            <p class="text-[#BCBCD8] text-sm flex justify-center items-center gap-2 flex-wrap">
+                made with <span class="heartbeat text-[#FF69B4] inline-block">❤️</span> by someone who still loves her — ashitaa
+            </p>
+            <div class="inline-flex items-center gap-1 mt-2 cute-tag">
+                <span>🎵</span> <span class="text-[11px]">BGM: soulful melody</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal for Come Back button -->
+    <div id="requestModal" class="fixed inset-0 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" id="modalBackdrop"></div>
+        <div class="glass-card relative z-10 max-w-md w-full mx-5 p-6 text-center transform scale-95 transition-all duration-300 border-[#FF69B4]/60">
+            <button id="closeModalBtn" class="absolute top-4 right-5 text-white/60 hover:text-[#FF69B4] text-2xl">&times;</button>
+            <div class="mt-2">
+                <span class="text-5xl block mb-3 heartbeat">🕊️</span>
+                <h4 class="text-2xl font-bold playfair text-white">to the only Molu</h4>
+                <div class="h-[2px] w-12 bg-[#FF69B4] mx-auto my-4 rounded-full"></div>
+                <p class="text-[#EAE6FF] leading-relaxed text-sm md:text-base">
+                    i'm not asking for the world. just a coffee, a single laugh, a minute where we exist again. 
+                    your presence is the only address my heart remembers.
+                </p>
+                <div class="mt-6">
+                    <button id="silentWishBtn" class="bg-transparent border border-[#FF69B4] text-[#FF69B4] px-5 py-2 rounded-full text-sm hover:bg-[#FF69B4]/10 transition-all">send a silent wish ✨</button>
+                </div>
+                <p class="text-[#A0A0C0] text-[10px] mt-5">every heartbeat carries your name, Molu 873.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Control Button (floating) - BGM autoplay attempted -->
+    <div class="fixed bottom-6 right-6 z-30">
+        <button id="bgmControlBtn" class="music-btn rounded-full p-3 shadow-xl flex items-center justify-center w-12 h-12">
+            <span id="musicIcon" class="text-2xl">🎵</span>
+        </button>
+    </div>
+
+    <script>
+        // ---------- YouTube Player for DIRECT PLAY (autoplay) ----------
+        // Video ID from the link: Qs1L92uL22o
+        let player = null;
+        let isPlaying = true;
+        let playerReady = false;
+        
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtubePlayer', {
+                height: '1',
+                width: '1',
+                videoId: 'Qs1L92uL22o',
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'loop': 1,
+                    'playlist': 'Qs1L92uL22o',
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'showinfo': 0,
+                    'mute': 0
+                },
+                events: {
+                    'onReady': (event) => {
+                        playerReady = true;
+                        event.target.setVolume(25);
+                        event.target.playVideo().catch(e => {
+                            console.warn("Autoplay blocked, showing hint");
+                            showAutoplayHint();
+                            isPlaying = false;
+                            document.getElementById('musicIcon').innerHTML = '🎧';
+                        });
+                        isPlaying = true;
+                        document.getElementById('musicIcon').innerHTML = '🎵';
+                    },
+                    'onStateChange': (event) => {
+                        if (event.data == YT.PlayerState.ENDED && isPlaying) {
+                            player.playVideo();
+                        }
+                        if (event.data == YT.PlayerState.PLAYING) {
+                            isPlaying = true;
+                            document.getElementById('musicIcon').innerHTML = '🎵';
+                        } else if (event.data == YT.PlayerState.PAUSED) {
+                            isPlaying = false;
+                            document.getElementById('musicIcon').innerHTML = '🎧';
+                        }
+                    },
+                    'onError': () => { showAutoplayHint(); }
+                }
+            });
+        }
+        
+        function showAutoplayHint() {
+            let hint = document.createElement('div');
+            hint.innerText = '🎵 Click the pink music button to play the BGM (browser requires interaction)';
+            hint.style.cssText = 'position:fixed; bottom:100px; right:24px; background:#1A1A2E; backdrop-filter:blur(12px); border-radius:40px; padding:8px 18px; font-size:12px; border:1px solid #FF69B4; color:#FFC0E0; z-index:1000; font-family:monospace; pointer-events:none;';
+            document.body.appendChild(hint);
+            setTimeout(() => { hint.style.opacity = '0'; setTimeout(() => hint.remove(), 5000); }, 4000);
+        }
+        
+        function startBGM() {
+            if (playerReady && player) {
+                player.playVideo();
+                isPlaying = true;
+                document.getElementById('musicIcon').innerHTML = '🎵';
+            } else {
+                setTimeout(() => {
+                    if (playerReady && player) {
+                        player.playVideo();
+                        isPlaying = true;
+                    }
+                }, 500);
+            }
+        }
+        
+        function stopBGM() {
+            if (playerReady && player) {
+                player.pauseVideo();
+                isPlaying = false;
+                document.getElementById('musicIcon').innerHTML = '🎧';
+            }
+        }
+        
+        window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+        
+        // ---------- Floating Particles (pink/black aesthetic) ----------
+        const canvas = document.getElementById('emotionCanvas');
+        let ctx = canvas.getContext('2d');
+        let particles = [];
+        let width, height;
+        
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        
+        class SoftParticle {
+            constructor(x, y, size, speedY, opacity, symbol) {
+                this.x = x; this.y = y; this.size = size; this.speedY = speedY;
+                this.opacity = opacity; this.symbol = symbol;
+                this.drift = Math.random() * Math.PI * 2;
+                this.driftSpeed = 0.006 + Math.random() * 0.018;
+            }
+            update() {
+                this.y += this.speedY;
+                this.drift += this.driftSpeed;
+                this.x += Math.sin(this.drift) * 0.2;
+                if (this.y > height + 60 || this.y < -70) this.reset();
+            }
+            reset() {
+                this.y = height + 30;
+                this.x = Math.random() * width;
+                this.speedY = 0.25 + Math.random() * 1.2;
+                this.opacity = 0.2 + Math.random() * 0.6;
+                this.size = 10 + Math.random() * 15;
+                const symbols = ['❤️', '💔', '🌸', '✨', '🕊️', '🌙', '🎵', '💗'];
+                this.symbol = symbols[Math.floor(Math.random() * symbols.length)];
+            }
+            draw(ctx) {
+                ctx.save();
+                ctx.font = `${this.size}px "Segoe UI Emoji", "Apple Color Emoji"`;
+                ctx.globalAlpha = this.opacity * 0.7;
+                ctx.fillStyle = `rgba(255, 105, 180, ${0.4 + Math.random() * 0.3})`;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#FF69B4';
+                ctx.fillText(this.symbol, this.x, this.y);
+                ctx.restore();
+            }
+        }
+        
+        function initParticles(count) {
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                let x = Math.random() * width;
+                let y = Math.random() * height;
+                let size = 10 + Math.random() * 15;
+                let speedY = 0.2 + Math.random() * 1.2;
+                let opacity = 0.2 + Math.random() * 0.6;
+                let symbols = ['❤️', '💔', '🌸', '✨', '🕊️', '🎵', '💗'];
+                let symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                particles.push(new SoftParticle(x, y, size, speedY, opacity, symbol));
+            }
+        }
+        
+        function animateParticles() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, width, height);
+            for (let p of particles) {
+                p.update();
+                p.draw(ctx);
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        
+        function setupCanvas() {
+            resizeCanvas();
+            initParticles(90);
+            animateParticles();
+        }
+        window.addEventListener('resize', () => { resizeCanvas(); initParticles(90); });
+        setupCanvas();
+        
+        // ---------- Scroll Reveal ----------
+        const fadeItems = document.querySelectorAll('.fade-up');
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    scrollObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2, rootMargin: "0px 0px -20px 0px" });
+        fadeItems.forEach(el => scrollObserver.observe(el));
+        setTimeout(() => {
+            fadeItems.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('revealed');
+            });
+        }, 150);
+        
+        // ---------- Modal Logic ----------
+        const modal = document.getElementById('requestModal');
+        const comebackBtn = document.getElementById('comebackBtn');
+        const closeModal = document.getElementById('closeModalBtn');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const silentWish = document.getElementById('silentWishBtn');
+        
+        function openModal() {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100', 'pointer-events-auto');
+            const cardModal = modal.querySelector('.glass-card');
+            if (cardModal) cardModal.classList.remove('scale-95');
+        }
+        function closeModalFunc() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100', 'pointer-events-auto');
+            const cardModal = modal.querySelector('.glass-card');
+            if (cardModal) cardModal.classList.add('scale-95');
+        }
+        comebackBtn.addEventListener('click', openModal);
+        closeModal.addEventListener('click', closeModalFunc);
+        modalBackdrop.addEventListener('click', closeModalFunc);
+        silentWish.addEventListener('click', () => {
+            const toast = document.createElement('div');
+            toast.innerText = '🕊️ your silent wish travels across the stars — straight to Molu. 🕊️';
+            toast.style.cssText = 'position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:#181822; backdrop-filter:blur(12px); border:1px solid #FF69B4; color:#FFC0E0; padding:10px 20px; border-radius:60px; font-size:13px; z-index:1000; white-space:nowrap; font-family:Inter;';
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 800); }, 2200);
+            closeModalFunc();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('opacity-100')) closeModalFunc();
+        });
+        
+        // ---------- Music Control Button (manual toggle) ----------
+        const bgmBtn = document.getElementById('bgmControlBtn');
+        bgmBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                stopBGM();
+            } else {
+                startBGM();
+            }
+        });
+        
+        // timeline dot pulse
+        setInterval(() => {
+            document.querySelectorAll('.timeline-dot').forEach(dot => {
+                dot.style.transform = 'scale(1.08)';
+                setTimeout(() => { dot.style.transform = 'scale(1)'; }, 400);
+            });
+        }, 2800);
+        
+        // small note if BGM doesn't autoplay
+        setTimeout(() => {
+            if (!playerReady) {
+                let note = document.createElement('div');
+                note.innerText = '🎵 BGM is loading, please click the pink button if silent';
+                note.style.cssText = 'position:fixed; bottom:100px; right:24px; background:#1A1A2E; backdrop-filter:blur(12px); border-radius:40px; padding:8px 18px; font-size:11px; border:1px solid #FF69B4; color:#FFC0E0; z-index:1000;';
+                document.body.appendChild(note);
+                setTimeout(() => { note.style.opacity = '0'; setTimeout(() => note.remove(), 5000); }, 4000);
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
